@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+  db:
+    container_name: db-back
+    image: nouchka/sqlite3
+    volumes:
+      - ./src/database:/etc/database
+    ports:
+      - "1234:3002"
+    working_dir: /etc/database
+
+  api:
+    build: .
+    container_name: back
+    image: node-back
+    volumes:
+      - .:/etc/data
+    ports:
+      - "3333:3001"
+    working_dir: /etc/data
+    depends_on:
+      - db
